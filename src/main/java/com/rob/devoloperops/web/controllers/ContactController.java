@@ -1,9 +1,12 @@
 package com.rob.devoloperops.web.controllers;
 
 
+import com.rob.devoloperops.service.EmailService;
 import com.rob.devoloperops.web.domain.frontend.FeedbackPojo;
+import org.hibernate.validator.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +21,8 @@ public class ContactController {
 
     private static final String CONTACT_US_VIEW_NAME = "contact/contact";
 
+     @Autowired
+     private EmailService emailService;
 
     private static final Logger LOG = LoggerFactory.getLogger(ContactController.class);
 
@@ -38,7 +43,7 @@ public class ContactController {
 
 
          LOG.debug("feedback pojo", feedback);
-         //emailService.senFeedbackEmail(feedback);
+         emailService.sendFeedbackEmail(feedback);
 
          return ContactController.CONTACT_US_VIEW_NAME;
     }
