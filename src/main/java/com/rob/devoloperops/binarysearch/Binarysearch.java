@@ -1417,10 +1417,59 @@ public class Binarysearch {
 
     }
 
+
+    public boolean isPalindrome(String s){
+
+        int end = s.length();
+
+        for(int i = 0, j = end; i< end; i++,j-- ){
+            if(s.charAt(i) != s.charAt(j)){
+
+                return false;
+            }
+
+
+        }
+
+        return true;
+    }
+
     public int returnerror(){
 
         return 0;
     }
+
+    //given a array of ints, find the one that occurs a majority of times i.e occurs more than n/2
+    public int findmajcandidate(int[] arr) {
+
+        //assume majority element is the first one
+        int count = 1;
+        int maj = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+
+            if (arr[i] == maj) {
+
+                count++;
+
+            } else {
+
+                count--;
+            }
+
+            if (count == 0) {
+
+
+                maj = arr[i];
+                count = 1;
+            }
+
+        }
+
+
+        return maj;
+    }
+
+
     public static void main(String[] args) {
         int [] arr =  {1,2,2,2,3,4,5,6,6,6,7,7,8};
 
