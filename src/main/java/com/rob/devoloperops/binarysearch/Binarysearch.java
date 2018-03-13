@@ -1439,6 +1439,36 @@ public class Binarysearch {
         return 0;
     }
 
+    // find the sum of the first 1000 prime number
+    public int findsum1000Primes(){
+
+        int total = 0;
+        int count = 0;
+        int number = 2;
+        while(count < 1000){
+           if(isaprime(number)){
+
+               total += number;
+               count++;
+           }
+             number++;
+        }
+
+        return total;
+    }
+
+    public boolean isaprime( int number){
+
+        for(int i = 2; i < Math.sqrt(number); i++){
+            if(number % i == 0){
+
+                return false;
+            }
+
+        }
+        return true;
+    }
+
     //given a array of ints, find the one that occurs a majority of times i.e occurs more than n/2
     public int findmajcandidate(int[] arr) {
 
@@ -1468,7 +1498,20 @@ public class Binarysearch {
 
         return maj;
     }
+   // get distinct word list from a given file
 
+    public Set<String> distinctWords(List words){
+        Set distinct = new HashSet<String>();
+        for(int i = 0; i<words.size(); i++){
+            if(distinct.add(words.get(i))==false){
+
+
+
+            }
+        }
+
+        return distinct;
+    }
 
     public static void main(String[] args) {
         int [] arr =  {1,2,2,2,3,4,5,6,6,6,7,7,8};
