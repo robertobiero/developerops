@@ -29,6 +29,7 @@ public class Role implements Serializable {
 
     }
 
+
     /**
      * Full constructor.
      * @param rolesEnum

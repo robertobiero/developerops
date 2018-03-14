@@ -1,11 +1,18 @@
 package com.rob.devoloperops.backend.persistence.domain.backend;
 
 
+import com.rob.devoloperops.enums.PlansEnum;
+import com.sun.org.apache.xml.internal.utils.SerializableLocatorImpl;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class Plan {
+public class Plan implements Serializable {
+
+
+
 
     public long getId() {
         return id;
@@ -32,6 +39,13 @@ public class Plan {
     private String name;
 
     public Plan(){}
+
+
+
+    public Plan(PlansEnum plansEnum) {
+        this.id = plansEnum.getId();
+        this.name = plansEnum.getPlanName();
+    }
 
 
 }

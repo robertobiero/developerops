@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface PlanRepository extends CrudRepository<Plan, Long> {
+public interface PlanRepository extends CrudRepository<Plan, Integer> {
 }
