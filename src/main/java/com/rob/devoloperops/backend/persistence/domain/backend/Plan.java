@@ -18,7 +18,7 @@ public class Plan implements Serializable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -34,7 +34,7 @@ public class Plan implements Serializable {
 
 
     @Id
-    private long id;
+    private int id;
 
     private String name;
 

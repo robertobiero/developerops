@@ -33,9 +33,9 @@ public class RepositoriesIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
-    private static final long BASIC_PLAN_ID = 1;
+    private static final int BASIC_PLAN_ID = 1;
     private static final long BASIC_ROLE_ID = 1;
-
+     private Integer basicplan = 2;
 
     @Before
     public void init() {
@@ -52,7 +52,7 @@ public class RepositoriesIntegrationTest {
     Plan basicPlan = createBasicPlan();
     planRepository.save(basicPlan);
 
-    Plan retrievedPlan = planRepository.findOne(BASIC_PLAN_ID);
+    Plan retrievedPlan = planRepository.findOne(basicplan);
     Assert.assertNotNull(retrievedPlan);
 
 }
