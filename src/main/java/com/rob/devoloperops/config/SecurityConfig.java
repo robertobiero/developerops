@@ -3,6 +3,7 @@ package com.rob.devoloperops.config;
 
 
 
+import com.rob.devoloperops.service.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private Environment env;
+
+
+    @Autowired
+    private UserSecurityService userSecurityService;
 
     /** The encryption SALT. */
     private static final String SALT = "fdalkjalk;3jlwf00sfaof";
@@ -66,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
 
         http
-                .authorizeRequests()
+               .authorizeRequests()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -78,12 +83,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-       // auth
-                //.userDetailsService(userSecurityService)
-               // .passwordEncoder(passwordEncoder());
+        auth
+                .userDetailsService(userSecurityService)
+                .passwordEncoder(passwordEncoder());
 
-        auth.inMemoryAuthentication().
-                withUser("user").password("password").roles("USER");
+
     }
 
 

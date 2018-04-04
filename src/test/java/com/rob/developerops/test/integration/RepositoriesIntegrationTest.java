@@ -3,6 +3,7 @@ package com.rob.developerops.test.integration;
 
 import com.rob.devoloperops.DeveloperopsApplication;
 import com.rob.devoloperops.backend.persistence.domain.backend.Plan;
+import com.rob.devoloperops.backend.persistence.domain.backend.User;
 import com.rob.devoloperops.backend.persistence.repositories.PlanRepository;
 import com.rob.devoloperops.backend.persistence.repositories.RoleRepository;
 import com.rob.devoloperops.backend.persistence.repositories.UserRepository;
@@ -65,6 +66,7 @@ public class RepositoriesIntegrationTest {
 
         return plan;
      }
+
 
 
 

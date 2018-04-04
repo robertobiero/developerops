@@ -1394,6 +1394,19 @@ public class Binarysearch {
 
     }
 
+    public int fibonaccib(int number){
+
+        int fibtotal = 0;
+       HashMap<Integer, Integer> fibmap = new HashMap<>();
+      if( fibmap.get(number) != null){
+           fibtotal = fibmap.get(number);
+           return fibtotal;
+      }
+        fibtotal = fibonaccib(number) + fibonaccib(number-1);
+        fibmap.put(number,fibtotal);
+        return fibtotal;
+    }
+
     public static boolean isAnagram(String x, String y){
 
         for(int i = 0; i<x.length(); i++){
@@ -1406,6 +1419,44 @@ public class Binarysearch {
 
     }
 
+    public int findMajcandida(int [] myarr){
+
+        int majkcand = myarr[0];
+        int count = 1;
+        for(int i = 0; i > myarr.length; i++){
+
+          if(myarr[i] == majkcand){
+
+              count++;
+
+          }
+          else{
+
+              count--;
+          }
+           if(count==0){
+
+              majkcand = myarr[i];
+              count =1;
+           }
+
+        }
+
+
+        return majkcand;
+    }
+
+    // 1,-3,2,5,-8
+    public int findmaxsubsequence(int [] arr){
+     int maxsofar = arr[0];
+     int currmax = arr[0];
+     for(int i = 0; i < arr.length; i++){
+       currmax = Math.max(maxsofar + arr[i], arr[i]);
+       maxsofar = Math.max(currmax,maxsofar);
+     }
+
+        return maxsofar;
+    }
     public boolean isPal(String s){
         int len = s.length();
 
@@ -1456,7 +1507,30 @@ public class Binarysearch {
 
         return total;
     }
+  public int binsearchb(int [] arr, int target){
 
+
+      int start = 0;
+      int end = arr.length;
+     while(start < end) {
+         int mid = arr.length/2;
+         if(arr[mid] == target){
+
+             return mid;
+         }
+         else if (arr[mid] > target) {
+
+            end  = mid-1;
+
+         }
+         else{
+
+             start = mid+1;
+         }
+     }
+
+      return  0;
+  }
     public boolean isaprime( int number){
 
         for(int i = 2; i < Math.sqrt(number); i++){
