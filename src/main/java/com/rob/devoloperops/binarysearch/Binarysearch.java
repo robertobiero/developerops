@@ -1,17 +1,6 @@
 package com.rob.devoloperops.binarysearch;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Binarysearch {
 
@@ -36,6 +25,45 @@ public class Binarysearch {
         }
 
         return -1;
+
+    }
+
+    // abbbcgthjkll
+    public int firstnonrepeating(String s){
+        Map<Character,Integer> dups = new LinkedHashMap<>();// linked hashmap maintains insertion order
+
+        int firstdup = -1;
+        for(int i=0; i< s.length(); i++){
+
+            Integer count = dups.get(i);
+            if(count == null){
+
+                dups.put(s.charAt(i),1);
+
+            }
+            else{
+
+                dups.put(s.charAt(i),count++);
+            }
+
+        }
+
+          for(char j : dups.keySet()){
+
+               int counter = dups.get(j);
+
+               if(counter == 1){
+
+                   firstdup = j;
+                   break;
+
+               }
+
+
+          }
+
+
+        return firstdup;
 
     }
 
@@ -241,10 +269,36 @@ public class Binarysearch {
 
         }
 
+
         fibo = fibonacci(number - 1) + fibonacci(number - 2);
         myCache.put(number, fibo);
         return fibo;
 
+    }
+
+
+    public static int [] swapevenoddarray(int [] arr){
+
+       int even = 0;
+       int odd = arr.length-1;
+       while(even<odd){
+
+             if(arr[even] %2 == 0){
+
+                 even++;
+             }
+             else{
+
+                int temp = arr[odd];
+
+                arr[odd] = arr[even];
+                arr[even] = temp;
+                odd--;
+             }
+
+        }
+
+       return arr;
     }
 
     public static String reverse(String test) {
@@ -259,7 +313,73 @@ public class Binarysearch {
 
         return builder.toString();
     }
+  public static boolean isthisaPalindrome(String s){
 
+        for(int i=0,j=s.length(); i<j; i++,j--){
+
+            if(s.charAt(i) != s.charAt(j)){
+
+                return false;
+            }
+
+        }
+
+        return true;
+  }
+  // given a number n, return all primes from 1 up to n
+  public static List<Integer> returnPrimes(int n){
+
+        List<Integer> myprimes = new ArrayList<>();
+        for(int i = 0; i< n; i++){
+
+            if(isPrime(n)){
+
+                myprimes.add(i);
+
+
+            }
+
+        }
+
+        return myprimes;
+  }
+  public static Map<String,Integer>  returnMinMaxAverage(LinkedList<Integer> linkedList){
+
+        Map<String, Integer> minMaxAve = new HashMap<>();
+        int max = Integer.MIN_VALUE;
+        int total = 0;
+   if(!linkedList.isEmpty()) {
+     for (int i = 0; i < linkedList.size(); i++) {
+         if (linkedList.get(i) > max) {
+
+             max = linkedList.get(i);
+         }
+         total += linkedList.get(i);
+     }
+
+     minMaxAve.put("max", max);
+
+       int average;
+       int min = Integer.MAX_VALUE;
+     // int min = linkedList.get(0);
+     for (int i = 0; i < linkedList.size(); i++) {
+         if (linkedList.get(i) < min) {
+
+             min = linkedList.get(i);
+         }
+
+     }
+     minMaxAve.put("min",min);
+ }
+  int average = 0;
+  if(total !=0) {
+      average = total / linkedList.size();
+  }
+      minMaxAve.put("average",average);
+
+      return minMaxAve;
+
+  }
     // given some amount x, calculate the least amount of change you would get
     // from a set of coins eg{25,10,5,1)
     // eg given 51, we would give two 25's and one 1 coin
@@ -594,7 +714,7 @@ public class Binarysearch {
     }
 
     // delete duplicates from an array {1,2,3,4,5,5,6,6,7,7,8,9}
-
+    // {false,false,false,false,false,false..........
     public static int[] deleteDuplicate(int[] arr) {
 
         boolean[] unique = new boolean[1000];
@@ -683,7 +803,41 @@ public class Binarysearch {
         return alldus;
 
     }
+  public static int first100primes(){
 
+        int count = 0;
+        int numbers = 3;
+        int sum = 0;
+        while(count < 1000){
+            if(isPrime(numbers)){
+                sum+= numbers;
+                count ++;
+
+            }
+
+            numbers++;
+
+        }
+
+
+      return sum;
+
+  }
+
+  public static int reverseNumber(int num){
+
+      String str = Integer.toString(num);
+
+        StringBuilder build = new StringBuilder();
+        for(int i = 0; i < str.length(); i++){
+
+            build.append(str.charAt(i));
+        }
+          build.reverse();
+        String reversed = build.toString();
+      int result = Integer.parseInt(reversed);
+    return result;
+  }
     public static List<Integer> returnDupfromMap(int[] arr) {
 
         Map<Integer, Integer> numDups = new HashMap<Integer, Integer>();
@@ -789,6 +943,29 @@ public class Binarysearch {
 
 
 
+    }
+
+    public static int [] evenodd1(int [] arr){
+        int even = arr[0];
+        int odd = arr.length-1;
+        while(even<odd){
+
+            if(arr[even]%2 == 0){
+
+                even++;
+
+            }
+            else{
+
+                int temp = arr[odd];
+                arr[odd] = arr[even];
+                arr[even] = temp;
+                odd--;
+            }
+
+        }
+
+           return arr;
     }
     // {3,4,6,9,3,19,11}
     public static int[] evenOdd(int[] arr) {
@@ -1586,13 +1763,94 @@ public class Binarysearch {
 
         return distinct;
     }
+   public static List<Integer> toptwofromarray(int [] myarr){
 
+   int max1 = myarr[0];
+   int max2 = myarr[1];
+   List<Integer> mymax = new ArrayList<>();
+   for(int i = 0; i < myarr.length; i++){
+         if(myarr[i] > max1){
+
+             max1 = myarr[i];
+
+         }
+          if(max1 < max2){
+             int temp;
+             temp = max2;
+             max2 = max1;
+             max1 = temp;
+          }
+
+
+   }
+   mymax.add(max1);
+   mymax.add(max2);
+
+
+       return mymax;
+
+   }
+
+
+   // remove duplicate from String
+   static String removeDuplicates(String s) {
+       StringBuilder noDupes = new StringBuilder();
+       for (int i = 0; i < s.length(); i++) {
+           String si = s.substring(i, i + 1);
+           if (noDupes.indexOf(si) == -1) {
+               noDupes.append(si);
+           }
+       }
+       return noDupes.toString();
+   }
+
+   public static String remdupPattern(String s, int n){
+         StringBuilder nodups = new StringBuilder();
+
+         for(int i = 0; i < s.length(); i++){
+             for(int j = 1; j < s.length(); j++){
+                 int counter = 0;
+                 if(s.charAt(i) == s.charAt(j)){
+
+
+
+                 }
+
+
+             }
+
+         }
+
+   return null;
+
+   }
+
+   // find words that are more than a given length
+    public List<String> returnwordsmatch(String s, int n){
+       String [] news =  s.split("");
+        List<String> myints = new ArrayList<>();
+           for(int i = 0; i< news.length; i++){
+
+               if(news[i].length() > n){
+
+                   myints.add(news[i]);
+
+               }
+
+           }
+        return myints;
+    }
     public static void main(String[] args) {
-        int [] arr =  {1,2,2,2,3,4,5,6,6,6,7,7,8};
+        LinkedList<Integer> pl = new LinkedList<Integer>();
+          pl.add(1);
+        pl.add(2);
+        pl.add(3);
+        pl.add(4);
+        pl.add(5);
+        int [] myarr = {1,4,6,8,9,4,6,5};
+      String mymap = removeDuplicates("sttttrrriiiinnnng");
 
-        int [] ans = deletefromsortedarray(arr);
-
-        System.out.println("testter");
+        System.out.println(mymap);
     }
 
 }

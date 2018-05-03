@@ -59,6 +59,11 @@ public class UserService {
 
         }
 
+        public void updateUserPassword(long userId, String password){
+
+        userRepository.updateUserPassword(userId,password);
+        }
+
 
 
     }
