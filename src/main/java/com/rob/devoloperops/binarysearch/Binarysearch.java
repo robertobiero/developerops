@@ -1,6 +1,9 @@
 package com.rob.devoloperops.binarysearch;
 
+import jersey.repackaged.com.google.common.collect.Sets;
+
 import java.util.*;
+
 
 public class Binarysearch {
 
@@ -148,7 +151,61 @@ public class Binarysearch {
             // merge(arr, l, m, r);
         }
     }
+    // replace characters  [a,c,d,b,b,c,a]  becomes [d,d,c,d,c,d,d]
+    public static char[] replacereturn(char [] arr){
 
+        int writeIndex = 0;
+        int acount = 0;
+
+        for(int i=0; i < arr.length; i++){
+
+            if(arr[i] != 'b'){
+
+                arr[writeIndex++] = arr[i];
+
+            }
+
+            if(arr[i] == 'a'){
+
+                acount++;
+            }
+
+
+        }
+
+        int currindex = writeIndex-1;
+        writeIndex = writeIndex + acount -1;
+        while(currindex >=0){
+            if(arr[currindex] == 'a'){
+
+                arr[writeIndex--] ='d';
+                arr[writeIndex--] ='d';
+
+            }else{
+
+                arr[writeIndex--] = arr[currindex];
+
+            }
+            currindex--;
+
+        }
+
+
+        return arr;
+    }
+    public static void letsPrintPyramid(){
+        for(int i= 0; i < 5; i++){
+            for(int j = 0; j < i; j++){
+
+                System.out.println("*");
+
+            }
+
+        }
+
+
+
+    }
     public static void printStars() {
 
         for (int i = 0; i < 6; i++) {
@@ -176,6 +233,74 @@ public class Binarysearch {
 
     }
 
+    public static void printpyra(){
+
+        for(int i = 6; i>0; i--){
+
+            for(int j = 0; j<6-i; j++){
+
+                System.out.print(" ");
+            }
+
+
+            for(int k = 0; k < i; k++){
+
+                System.out.print("* ");
+            }
+
+            System.out.println();
+        }
+
+
+
+
+    }
+   // (((}}}]}}}}]{
+    public static boolean isValidParenthesis(String s){
+
+        Map<Character,Character> parmap = new HashMap<>();
+        parmap.put('(',')');
+        parmap.put('{','}');
+        parmap.put('[',']');
+
+        Stack<Character> mystack = new Stack<>();
+
+
+        for(int i = 0; i < s.length(); i++){
+
+            if(parmap.containsKey(s.charAt(i))){
+                mystack.push(s.charAt(i));
+            }
+            else if(parmap.containsValue(s.charAt(i)) && !mystack.isEmpty()){
+                mystack.pop();
+            }
+
+
+        }
+
+        return mystack.isEmpty();
+    }
+    // {1, 2, 3, 4}
+    // {2, 4, 6 ,8},
+    // {3,12,18,24}
+  public static int [][] multiplicationtable1(){
+
+     int [][] mult = new int[5][5];
+    int row = 1;
+    int column = 1;
+     for(int i = 0; i < mult.length; i++){
+         for(int k = 0; k < mult[i].length; k++){
+
+             mult[i][k] = row * column;
+             column++;
+         }
+         column = 1;
+         row++;
+     }
+
+  return mult;
+
+  }
     public static int[] removeDuplicates(int[] a) {
 
         int previousElement = a[0];
@@ -208,48 +333,363 @@ public class Binarysearch {
 
     }
 
-    public static int[] removedup(int[] arr) {
+    public static int[] removedupunsorted(int[] arr) {
 
         // int [] arr1 = {1,1,2,2,3,3,4,4,5,5};
+        boolean [] same = new boolean[arr.length];//{false,true,false,true,false,true,false,true,false,true}
+        int samnums = 0;
 
-        int[] output = new int[20];
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] == arr[j]) {
-                    i++;
+        for(int i = 0; i<arr.length; i++){
 
-                } else {
+            for(int j = 1; j< arr.length; i++){
 
-                    j++;
-                    output[i] = arr[++i];
+                if(arr[i] == arr[j]){
+
+                    same[j] = true;
+                    samnums++;
                 }
 
+
+            }
+
+
+        }
+        int [] result = new int[arr.length-samnums];
+        int count = 0;
+        for(int k = 0; k< arr.length; k++){
+            if(same[k]){
+                continue;
+
+            }
+            else{
+                result[count] = arr[k];
+                count++;
             }
 
         }
 
-        return output;
-
+         return result;
     }
 
-    public static int [] removedup2(int [] arr){
-        int[] output = null;
-        int count = 1;
-        for(int i =0; i < arr.length; i++){
-            for(int j=0; j <i; j++)	{
-                if(arr[i] != arr[j]){
-                    output = new int[count++];
-                    output[i] = arr[i];
+
+    public static int [] removearrdups(int [] arr){
+
+        boolean[] dups = new boolean[arr.length];
+
+        int next = 1;
+        int counter = 0;
+        for(int i = 0; i < arr.length-1; i++) {
+
+            if (arr[i] == arr[next++]) {
+
+                dups[i + 1] = true;
+                counter++;
+
+            }
+        }
+
+            int [] newarr = new int[arr.length-counter];
+            int count = 0;
+            for(int j = 0; j< arr.length; j++){
+                if(!dups[j]){
+
+                    newarr[count] = arr[j];
+                    count++;
                 }
 
             }
 
-        }
 
-        return output;
+
+
+
+        return newarr;
 
     }
 
+    // remove dups sorted
+    public static int [] removedupssorted(int [] arr){
+
+
+              for(int i = 0; i< arr.length; i++){
+                  for(int j=arr.length-1; j>i; j-- ){
+                      if(arr[j] < arr[i]){
+
+                          int temp = arr[j];
+                          arr[j] = arr[i];
+                          arr[i] = temp;
+                      }
+
+
+                  }
+
+              }
+              boolean[] same = new boolean[arr.length];
+              int count = 0;
+              for(int k = 0; k< arr.length; k++){
+
+                  if(k<arr.length-1 && arr[k] == arr[k+1]){
+                      same[k] = true;
+
+                        count++;
+
+                  }
+
+
+
+
+              }
+        int counter = 0;
+          int [] newarr = new int[arr.length-count];
+              for(int l = 0; l<arr.length; l++){
+
+                  if(same[l]){
+
+                      continue;
+                  }
+                  else{
+
+
+                      newarr[counter] = arr[l];
+                      counter++;
+                  }
+
+
+              }
+
+        return newarr;
+
+    }
+
+
+    // find peak element i.e element greater than its neighbouirs
+    public static int findpeakelemnt(int arr[], int start, int end){
+
+      int peak = -1;
+        if(end-start < 2) {
+
+            return peak;
+        }
+
+
+        int mid = (start + end)/2;
+
+        if(arr[mid] > arr[mid-1] && arr[mid] > arr[mid+1]){
+
+         peak = arr[mid];
+
+        }
+
+           findpeakelemnt(arr, start, mid);
+           findpeakelemnt(arr,mid,end);
+
+
+        return peak;
+    }
+
+    // calculate power of a number
+    public int calcPower(int base, int exp){
+
+        int result = 1;
+
+        while(exp != 0){
+
+            result*= base;
+            exp--;
+        }
+
+        return result;
+    }
+
+    public int calcuexponent(int base, int exp){
+
+        int result = 1;
+        for(int i = 0; i < exp; i++){
+
+            result*= base;
+
+        }
+
+        return result;
+    }
+
+    public static boolean isArmstrongNumber(int num){
+
+        String arm = Integer.toString(num);
+        double result = 0;
+        for(int i = 0; i< arm.length(); i++){
+              int j =  Character.getNumericValue(arm.charAt(i));
+           result += Math.pow(j,3);
+        }
+        if(result == num){
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean stringhasdigits(String s) throws NumberFormatException{
+        boolean isNum;
+     try{
+
+         int num = Integer.parseInt(s);
+         isNum = true;
+     }
+     catch(NumberFormatException nf){
+
+           isNum = false;
+
+        }
+
+       return isNum;
+    }
+public static boolean stringhasdigitsb(String s){
+
+        boolean isDigit = false;
+        for(int i = 0; i < s.length(); i++){
+            if(Character.isDigit(s.charAt(i))){
+
+                isDigit = true;
+            }
+
+
+        }
+
+        return isDigit;
+}
+
+
+    // write a multiplication table {{1 2 3 4  5  6  7}
+    //                                2 4 6 8 10 12 14  },
+    public static int [][] multiplicationtable(){
+   int [][]results = new int[5][5];
+    int row = 1;
+    int column = 1;
+      for(int i = 0; i < results.length; i++){
+          for(int j = 0; j< results[i].length; j++){
+
+             results[i][j] = row * column;
+              column++;
+
+
+          }
+           row++;
+          column = 1;
+
+      }
+
+
+     return results;
+    }
+
+    public static int [][] doubleelemsnts(int [][] arr){
+
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < arr[i].length; j++){
+
+                arr[i][j] = arr[i][j] * arr[i][j];
+            }
+
+
+
+
+        }
+
+        return arr;
+
+    }
+
+  public static int binsearchdarray(int [][] arr,int element){
+       for(int i = 0; i < arr.length; i++){
+           int start = 0;
+           int end = arr[i].length;
+          while(start < end) {
+               int mid = (start + end) / 2;
+
+               if(arr[i][mid] == element){
+
+                   return mid;
+               }
+               else if(arr[i][mid] > element){
+
+                   end = mid-1;
+               }
+               else{
+                   start = mid +1 ;
+               }
+           }
+
+
+        }
+         return -1;
+
+  }
+    // {{1,4,5,7,8},{4,5,6,7,8}}
+    public static int stairsearch(int arr [][], int element){
+
+        int row = 0;
+        int column = arr.length -1;
+        while(row < column && column >= 0){
+          if(arr[row][column] == element)  {
+
+              return column;
+
+          }
+          if(arr[row][column] >  element){
+            column --;
+
+
+          }
+          else{
+
+              row++;
+          }
+
+
+        }
+
+     return -1;
+
+    }
+
+    // {{1,4,5,7,8},{4,5,6,7,8}}
+    public static int  binsearch2darray(int [][] arr, int target){
+        int result = -1;
+
+         for(int i = 0; i < arr.length; i++) {
+
+             int start = 0;
+             int end = arr[i].length;
+             while(start < end){
+           //  for (int j = 0; j < arr[i].length; j++) {
+                 int mid = (start + end) / 2;
+
+                 if (arr[i][mid] == target) {
+
+                     return mid;
+
+
+                 } else if (arr[i][mid] > target) {
+
+                     end = mid - 1;
+
+                 } else {
+
+                     start = mid + 1;
+                 }
+
+
+          //   }
+         }
+
+
+
+
+         }
+
+         return -1;
+    }
     public static int fibonacci(int number) {
 
         HashMap<Integer, Integer> myCache = new HashMap<Integer, Integer>();
@@ -300,6 +740,26 @@ public class Binarysearch {
 
        return arr;
     }
+    //{2,7,11,15} target 9   return index of two numbers adding to target
+    public static int [] returnindex(int [] arr, int target){
+
+      List<Integer>  mylist = new ArrayList<>();
+      Map<Integer,Integer> mymap = new LinkedHashMap<>();
+      for(int i = 0; i < arr.length; i++){
+
+          int complement = target - arr[i];
+          if(mymap.containsKey(complement)){
+
+              return new int[] {mymap.get(complement),i};
+
+          }
+
+          mymap.put(arr[i],i);
+
+
+      }
+        return new int [] {-1};
+    }
 
     public static String reverse(String test) {
 
@@ -327,7 +787,7 @@ public class Binarysearch {
         return true;
   }
   // given a number n, return all primes from 1 up to n
-  public static List<Integer> returnPrimes(int n){
+  public static List returnPrimes(int n){
 
         List<Integer> myprimes = new ArrayList<>();
         for(int i = 0; i< n; i++){
@@ -342,6 +802,99 @@ public class Binarysearch {
         }
 
         return myprimes;
+  }
+
+    public static int[] solutionmultiplication(int X) {
+
+        List<Integer> res = new ArrayList<Integer>();
+        int result = 1;
+
+        for(int i = 1; i <= X; i++){
+            for(int j = 1; j<=X; j++){
+
+
+                result = i*j;
+                res.add(result);
+
+
+            }
+
+        }
+        int [] newarr = new int[res.size()];
+
+        int counter = 0;
+        for(int s : res){
+
+            newarr[counter] = s;
+            counter++;
+        }
+
+        return newarr;
+
+    }
+
+
+  // given an array from 1 to 10 find missing number
+  public int findmissinginarray(int [] arr){
+
+        int comtotal = 0;
+        for(int j = 1; j<=10; j++){
+            comtotal+= j;
+
+        }
+        int total = 0;
+        for(int i : arr){
+            total += i;
+        }
+
+        int missing = comtotal - total;
+
+
+        return missing;
+  }
+  // factorial of 5  = 5*4*3*2*1
+  public int factorial2(int num){
+
+     int result = 1;
+
+        if(num == 0){
+
+           return 1;
+        }
+         result = num * factorial2(num-1);
+        return result;
+  }
+
+  public static void mostpopelement(int [] arr){
+
+        int popular = arr[0];
+        int count = 0;
+
+        for(int i = 1; i < arr.length; i++){
+
+            if(arr[i] == popular){
+
+                count++;
+            }
+            else{
+                count--;
+            }
+            if(count == 0){
+
+                popular = arr[i];
+                count = 1;
+            }
+
+
+
+
+
+        }
+
+
+
+
+
   }
   public static Map<String,Integer>  returnMinMaxAverage(LinkedList<Integer> linkedList){
 
@@ -478,6 +1031,26 @@ public class Binarysearch {
         }
         return sum;
 
+    }
+
+    public int sumfirst100primes(){
+
+        int numbers = 1;
+        int count = 0;
+        int sum = 0;
+        while(count < 100){
+            if(isPrime(numbers)){
+
+                sum+=numbers;
+
+                count++;
+            }
+
+            numbers++;
+
+        }
+
+        return sum;
     }
 
     // remove duplicates from an array
@@ -674,28 +1247,108 @@ public class Binarysearch {
         return result;
 
     }
+     //count words {"hello", "world"} i=2,e=1,h=1
 
-    // find majority element occurs more than n/2 times{ 1,2,3,3,4,5,3}
-    public static int findmajorityElement(int[] arr) {
+    public static Map countchars(String [] arr){
+
+        Map<Character,Integer> my1map = new LinkedHashMap<>();
+        Map<Character, Integer> sortedMap = new HashMap<Character, Integer>();
+        for(int i = 0; i < arr.length; i++) {
+
+            String s = arr[i];
+            for (int j = 0; j < s.length(); j++) {
+
+                Integer count = my1map.get(s.charAt(j));
+                if (count == null) {
+
+                    my1map.put(s.charAt(j), 1);
+                } else {
+
+
+                    my1map.put(s.charAt(j), ++count);
+                }
+
+
+            }
+        }
+            // 1. Convert Map to List of Map
+            List<Map.Entry<Character, Integer>> list =
+                    new LinkedList<Map.Entry<Character, Integer>>(my1map.entrySet());
+
+            // 2. Sort list with Collections.sort(), provide a custom Comparator
+            //    Try switch the o1 o2 position for a different order
+            Collections.sort(list, new Comparator<Map.Entry<Character,Integer>>() {
+                public int compare(Map.Entry<Character, Integer> o1,
+                                   Map.Entry<Character, Integer> o2) {
+                    return (o2.getValue()).compareTo(o1.getValue());
+                }
+            });
+            // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
+
+            for (Map.Entry<Character, Integer> entry : list) {
+                sortedMap.put(entry.getKey(), entry.getValue());
+            }
+
+
+
+           return sortedMap;
+    }
+
+    // check if number in array add up to number e.g  {1,4,6,7,8} sum is 10 so numbers are 6 and 4
+    public static Set checkarrayaddition(int [] arr,int sum){
+        Map<Integer,Integer> mymap = new HashMap<>();
+        for(int i = 0; i < arr.length; i++){
+
+            mymap.put(sum-arr[i],arr[i]);
+
+        }
+
+        Map<Integer,Integer> newmap = new HashMap<>();
+
+   Set<Integer> myset = new HashSet<>();
+           for(int j = 0; j < arr.length; j++){
+
+              if(mymap.containsKey(arr[j])){
+                  myset.add(arr[j]);
+
+              }
+
+
+           }
+    return myset;
+
+    }
+
+
+    // find majority element occurs more than n/2 times{ john,john,tom,lucy,lucy,rick}
+    public static String findmajorityElement(String [] arr) {
         // assume first element is majorit element
 
 
-        int i, count = 0, maj = 0;
-
+        int i, count = 0 ;
+        String maj = null;
+        List<String> cand = new ArrayList<>();
         for (i = 0; i < arr.length; i++) {
             if (count == 0) {
                 maj = arr[i]; // assign first element as teh majority element
                 count = 1;
-            } else if (maj == arr[i])
+                if(i!=0){
+                    cand.add(maj);
+                }
+            } else if (maj == arr[i]) {
                 count++;
+
+            }
             else
                 count--;
         }
-        if (!majeexists(arr, maj)) {
+      //  if (!majeexists(arr, maj)) {
 
-            System.out.println("majority doesnt esixt");
-        }
-        return maj;
+       //     System.out.println("majority doesnt esixt");
+       // }
+        Collections.sort(cand);
+        String s = cand.get(0);
+        return s;
 
     }
 
@@ -822,6 +1475,41 @@ public class Binarysearch {
 
       return sum;
 
+  }
+
+  public static boolean isvalidstring(String s){
+
+        int parcount = 0;
+        int brackcount = 0;
+        int curlybrac = 0;
+        boolean isvalid = false;
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '{' || s.charAt(i)=='}'){
+
+                parcount++;
+            }
+            if(s.charAt(i) == '(' || s.charAt(i)==')'){
+               brackcount++;
+
+            }
+            if(s.charAt(i) == '[' || s.charAt(i)==']'){
+
+               curlybrac++;
+            }
+            if(parcount%2 ==0 && brackcount%2==0 && curlybrac%2==0){
+                isvalid = true;
+
+            }
+
+
+
+
+
+
+
+        }
+
+      return isvalid;
   }
 
   public static int reverseNumber(int num){
@@ -1099,6 +1787,31 @@ public class Binarysearch {
 
     }
 
+    //find smallest two in array{3,5,8,9,4,20}
+    public static List findmax2inarray(int [] arr){
+
+
+        int firstmin = Integer.MAX_VALUE;
+        int secondmin = Integer.MAX_VALUE;
+          for(int n: arr){
+              if(firstmin>n){
+
+                  secondmin=firstmin;
+                  firstmin = n;
+              }
+              else if(secondmin > n){
+
+                  secondmin = n;
+              }
+
+          }
+        List<Integer> max2  = new ArrayList<>();
+          max2.add(firstmin);
+          max2.add(secondmin);
+
+          return max2;
+
+    }
     public static int findmaximuninarray(int[] arry) {
 
         int count = 0;
@@ -1310,6 +2023,22 @@ public class Binarysearch {
         }
         return str.toString();
     }
+
+
+    // givena list of integers suare them and return
+
+    public static List squareintegers(List<Integer> arr){
+
+        int count = 0;
+          for(int j : arr){
+              int doubled = j*j;
+            arr.add(doubled);
+
+              count++;
+
+          }
+        return arr;
+    }
     public static int  returnmajorityelem(int [] arr){
 
         int maj = 0 ;
@@ -1472,16 +2201,36 @@ public class Binarysearch {
         return maxDiff;
 
     }
+
+
+    // given an array of stock prices find the max profit from sellin
+
+    public double maxprofit(int [] arr){
+
+      double maxProfit = Double.MIN_VALUE; double minprice = 0.0;
+      for(double price : arr){
+
+          maxProfit = Math.max(maxProfit, price-minprice);
+
+          minprice = Math.min(minprice, price);
+
+      }
+
+          return maxProfit;
+    }
     // check if two string are anagrams  eg vase and save
     public boolean checkIfAnagram(String s, String k){
 
+
+        s = s.toLowerCase();
+        k = k.toLowerCase();
         char [] sA = s.toCharArray();
         char [] kA = k.toCharArray();
 
         Arrays.sort(sA);
         Arrays.sort(kA);
 
-        return  sA.equals(kA);
+        return  Arrays.equals(sA, kA);
 
 
     }
@@ -1644,6 +2393,39 @@ public class Binarysearch {
         return false;
 
     }
+    // given two strings {a,b,c},{a,d,e} find th enumber of strings you can take out to make both anagrams
+   public static int makeAnagram(String a, String b){
+
+
+       char [] c = a.toCharArray();
+       char [] d = b.toCharArray();
+       Set<Character> seta = new HashSet<Character>();
+       Set<Character> setb = new HashSet<Character>();
+       Arrays.sort(c);
+       Arrays.sort(d);
+       int counter = 0;
+       if(Arrays.equals(c,d)){
+
+           return 0;
+       }
+       for(int i = 0; i < c.length; i++){
+           seta.add(c[i]);
+
+       }
+       for(int i = 0; i < d.length; i++){
+           setb.add(d[i]);
+
+       }
+       Sets.SetView<Character> s = Sets.symmetricDifference(seta,setb);
+       for(char q : s){
+
+           System.out.println(q);
+       }
+       return s.size();
+   }
+
+
+
 
 
     public boolean isPalindrome(String s){
@@ -1825,6 +2607,29 @@ public class Binarysearch {
 
    }
 
+   // given an array {4,8,10,17,20}  it should return 17 and 20
+  public static List findtoptwoinarray(int [] myarr){
+
+        int largest = myarr[0];
+        List<Integer> mylist = new ArrayList<>();
+        Arrays.sort(myarr);
+        mylist.add(myarr[myarr.length-1]);
+        mylist.add(myarr[myarr.length-2]);
+       /* for(int i = 0; i < myarr.length; i++){
+            mylist.add(myarr[i]);
+            if(myarr[i] > largest){
+
+                largest = myarr[i];
+
+            }
+
+        }*/
+
+
+        return mylist;
+  }
+
+
    // find words that are more than a given length
     public List<String> returnwordsmatch(String s, int n){
        String [] news =  s.split("");
@@ -1840,17 +2645,712 @@ public class Binarysearch {
            }
         return myints;
     }
-    public static void main(String[] args) {
-        LinkedList<Integer> pl = new LinkedList<Integer>();
-          pl.add(1);
-        pl.add(2);
-        pl.add(3);
-        pl.add(4);
-        pl.add(5);
-        int [] myarr = {1,4,6,8,9,4,6,5};
-      String mymap = removeDuplicates("sttttrrriiiinnnng");
 
+
+
+    public static Map pairsequaltonumber(int [] arr){
+
+
+        int keycount = 0;
+        List<Integer> pair = new ArrayList<>();
+        Map<Integer,List<Integer>> mypairs = new HashMap<>();
+        for(int i = 0; i< arr.length; i++){
+
+            for(int j = 1; j< arr.length; j++){
+
+                if(arr[i] +arr[j] == 100){
+                    pair.add(arr[i]);
+                    pair.add(arr[j]);
+                    mypairs.put(keycount++,pair);
+
+
+                }
+
+
+            }
+
+
+        }
+
+
+        return mypairs;
+    }
+
+
+
+    public static void drawpyramid(){
+
+        for(int i =0; i< 5; i++){
+
+            for(int j = 0; j< 5-i; j++){
+
+                System.out.print(" ");
+
+            }
+
+            for(int k = 0; k< i; k++){
+
+                System.out.print("* ");
+
+            }
+
+
+
+            System.out.println();
+
+        }
+
+
+
+
+    }
+    /**
+     * better solution to above algorithm
+     * Given an array of integers finds two elements in the array whose sum is equal to n.
+     * @param numbers
+     * @param n
+     */
+    public static void printPairsUsingSet(int[] numbers, int n){
+        if(numbers.length < 2){
+            return;
+        }
+        Set set = new HashSet(numbers.length);
+
+        for(int value : numbers){
+            int target = n - value;
+
+            // if target number is not in set then add
+            if(!set.contains(target)){
+                set.add(value);
+            }else {
+                System.out.printf("(%d, %d) %n", value, target);
+            }
+        }
+    }
+    //Given an array of integers finds two elements in the array whose sum is equal to n.{2,4,6,3,7} n = 10
+    public static void printarraypairs(int [] numbers, int n){
+
+        Map<Integer,Integer> pairs = new HashMap<>();
+        Set<Integer> myset = new HashSet<>();
+
+       List k = Arrays.asList(numbers);
+
+        for(int num : numbers){
+
+            int target = n - num;
+            if(k.contains(target) || k.contains(num)){
+
+
+                pairs.put(target,num);
+            }
+
+
+        }
+
+
+    }
+
+
+
+
+    // find intersection of sorted arrays
+
+    public static Set findintercestion(int [] arr1, int [] arr2){
+
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> inter = new HashSet<>();
+        for(int i : arr1){
+
+            set1.add(i);
+        }
+        for(int j : arr2){
+
+            if(set1.add(j) == false){
+
+                inter.add(j);
+            }
+        }
+
+        return inter;
+    }
+    public static int[] removedupsfromarray1(int [] arr){
+          if(arr == null || arr.length < 2){
+
+            int [] noduplicates = {};
+              return noduplicates;
+          }
+          Set<Integer> myset = new HashSet<>();
+          int count = 0;
+           for(int j : arr){
+               if(myset.add(j) == false){
+
+                   count++;
+
+               }
+               myset.add(j);
+
+
+           }
+           int nolength = arr.length-count;
+           int [] noduparr = new int[nolength];
+        int i = 0;
+        for(int k :myset){
+
+            noduparr[i] = k;
+            i++;
+        }
+          return noduparr;
+    }
+
+    //Example: removeChars("aaab", 2) should return "aab"
+    //     * Example: removeChars("aabb", 1) should return "ab"
+    //     * Example: removeChars("aabbaa", 1) should return "aba"
+    //     * Example: removeChars("aaaabbaacccc", 3) should return "aaabbaccc"
+    public static String removeChar(String str, int n) {
+
+        int charcount =0;
+        int i;
+        StringBuilder builder = new StringBuilder();
+        for( i = 0; i< str.length(); i++){
+            if(i< str.length()-1 && str.charAt(i) == str.charAt(i+1)){
+                charcount++;
+                if(charcount <= n){
+
+                    builder.append(str.charAt(i));
+                }
+
+            }
+            else{
+                charcount = 1;
+                builder.append(str.charAt(i));
+
+            }
+            
+        }
+
+        int cap = builder.length()-1;
+
+        if(builder.charAt(cap) == builder.charAt(cap-1)){
+            if(charcount > n) {
+                builder.deleteCharAt(cap);
+            }
+        }
+        return builder.toString();
+
+        //  return chars.toString();
+    }
+
+    public static int [] sortbublesort(int [] arr){
+
+
+        for(int i = 0; i < arr.length; i++){
+            for(int j = arr.length-1; j>i; j--){
+                if(arr[j] < arr[j-1]){
+                    swap(arr,j,j-1);
+
+                }
+
+
+            }
+
+
+
+        }
+        return arr;
+    }
+
+    public String longestpalindromeparams(String s, int left, int right){
+
+        while(left >= 0 && right<s.length() && s.charAt(left) == s.charAt(right)){
+
+            left--;
+            right++;
+        }
+
+        return s.substring(left+1,right);
+    }
+     // banana
+     public String longestpalindrome(String s){
+
+        String longestpalindrom = s.substring(0,1);
+        for(int i = 0; i < s.length(); i++){
+
+           String longpal = longestpalindromeparams(s,i,i);
+           if(longpal.length() > longestpalindrom.length()){
+
+               longestpalindrom = longpal;
+           }
+
+           // for checking even palindromes eg evve
+           String longpal2 = longestpalindromeparams(s,i,i+1);
+
+           if(longpal2.length() > longestpalindrom.length()){
+
+               longestpalindrom = longpal2;
+           }
+
+
+        }
+        return longestpalindrom;
+     }
+
+     // reverse integer
+    public static int reverse(int x) {
+        String s = Integer.toString(x);
+        String result = "";
+        int length = s.length();
+        for(int i = length-1; i>=0; i--){
+            if(s.charAt(i) != 0){
+                result += s.charAt(i);
+            }
+
+
+        }
+        StringBuilder sb = new StringBuilder(result);
+
+        if(result.contains("-")){
+
+            result = result.charAt(length - 1) + result.substring(0, length - 1) ;
+
+        }
+        int fin = Integer.parseInt(result);
+
+        return fin;
+    }
+    public static void swap(int[] array, int from,int to){
+        int temp = array[from];
+        array[from] = array[to];
+        array[to] = temp;
+
+    }
+    // given an array of stock prices, find teh max you can get from selling i.e buy at lowest, sell at highes
+    public static int findmaxreturnfromarray(int [] arr){
+        int minsofar = arr[0];
+        int maxamt = 0;
+        for(int i= 0; i< arr.length; i++){
+
+             maxamt = Math.max(maxamt, arr[i] - minsofar);
+            minsofar = Math.min(minsofar, arr[i]);
+
+        }
+
+        return maxamt;
+    }
+    /*
+
+
+   /*
+       {1, 2, 3,  4,  5}
+       {2, 4, 6,  8, 10
+       {3,12,18, 24, 30
+    */
+
+  public int [][] multiplicationtable(int n){
+
+       int [] [] table = new int[n][n] ;
+       int row = 1;
+       int column = 1;
+       for(int i = 0; i < table.length; i++){
+           for(int j = 0; j < table[i].length; j++){
+
+               table[i][j] = column * row;
+               column++;
+
+           }
+           row++;
+           column = 1;
+
+       }
+
+
+        return table;
+  }
+
+    // remove tduplicates from array {1, 2, 1, 2, 3, 4, 5}
+    public static int [] removeduplicatesd(int [] arr){
+
+         Boolean [] dups = new Boolean[arr.length];// {false,false,false,false,false,false,false}
+        Arrays.sort(arr);
+        int k = 1;
+        int counter = 0;
+          for(int i = 0; i < arr.length-1; i++){
+              if(arr[i] == arr[i+1]){
+                  dups[i] = true;
+                  counter++;
+              }
+
+
+          }
+
+          int [] newarr = new int[arr.length-counter];
+          int writer = 0;
+          for(int j = 0; j < arr.length; j++ ){
+              if(dups[j]){
+
+                  continue;
+              }
+              else{
+                  newarr[writer] = arr[j];
+
+              }
+
+          }
+
+         return newarr;
+    }
+
+
+    // remove dups without booelan array
+    public static int [] removedupswithoutbool(int [] arr){
+
+        int i = 1;
+        int j = 0;
+
+        while(j < arr.length-1 && i < arr.length){
+            if(arr[i] == arr[j]){
+                i++;
+            }
+            else{
+                arr[++j] = arr[i++];
+            }
+        }
+
+        int [] output = new int[j+1];
+        for(int k=0; k<output.length; k++){
+            output[k] = arr[k];
+        }
+
+    return output;
+    }
+   public  static long arrayManipulation(int n, int[][] queries) {
+
+       int [] arr = {0,0,0,0,0};
+        int from = 0;
+        int to = 0;
+        int query = 0;
+        for(int i = 0; i < queries.length; i++){
+            for(int j = 0; j < queries[i].length; j++){
+                if(j == 0){
+                    from = queries[i][j];
+                }
+                else if(j == 1){
+                    to  = queries[i][j];
+                }
+                else{
+                    query = queries[i][j];
+
+                }
+
+            }
+            for(int k = from; k <= to; k++){
+
+                arr[k-1] = arr[k-1] + query;
+
+            }
+
+        }
+        long max = arr[0];
+        for(int l = 0; l < arr.length; l++){
+            if(arr[l] > max){
+
+                max = arr[l];
+            }
+
+        }
+        return max;
+    }
+
+    public static int sumInRange(int[] nums, int[][] queries) {
+
+
+        List<Integer> addy = new ArrayList<>();
+        int to = 0;
+        int from = 0;
+        for(int i = 0; i < queries.length; i++){
+            for(int j = 0; j < queries[i].length; j++){
+                if(j == 1){
+
+                    to = queries[i][j];
+                }
+                else{
+                    from = queries[i][j];
+                }
+
+            }
+            int total = 0;
+            for(int k = from; k <= to; k++){
+
+                total += nums[k];
+
+            }
+             addy.add(total);
+
+        }
+        int sumtotal = 0;
+        for (Integer number : addy) {
+
+            sumtotal += number;
+        }
+
+        return sumtotal;
+    }
+    //input1 = {1, 5, 10, 20, 40, 80}
+    //input2 = {6, 7, 20, 80, 100}
+    //input3 = {3, 4, 15, 20, 30, 70 , 120}
+    public static List<Integer> findcommoninarray(int [] arr, int [] arr1, int [] arr2){
+
+      Set<Integer> myset = new HashSet<>();
+        Set<Integer> myset2 = new HashSet<>();
+      List<Integer> dups = new ArrayList<>();
+      for(int i = 0; i < arr.length; i++){
+
+          myset.add(arr[i]);
+      }
+
+      for(int j = 0; j < arr1.length; j++){
+          if(myset.add(arr1[j]) == false){
+
+              myset2.add(arr1[j]);
+          }
+
+      }
+
+      for(int k = 0; k < arr2.length; k++){
+
+          if(myset2.add(arr2[k]) == false){
+
+
+              dups.add(arr2[k]);
+          }
+
+      }
+   return dups;
+
+    }
+
+
+
+
+    // find the longest subsequent string without duplicates Given "abcabcbb", the answer is "abc", which the length is 3.
+   public static int longestsubsequest(String s){
+
+      Set<Character> myset = new HashSet<>();
+        int ans = 0;
+        int j = 1;
+        for(int i = 0; i < s.length(); i++){
+
+              if(!myset.contains(s.charAt(i))){
+
+                     myset.add(s.charAt(i));
+                     ans = Math.max(ans, ++j);
+
+              }
+              else{
+                  j = 0;
+                  myset.clear();
+              }
+
+
+        }
+
+       return ans;
+   }
+    //find top two in array
+    public static List findtop2inarr(int [] arr){
+
+         int firstmax = Integer.MIN_VALUE;
+         int secondmax = Integer.MIN_VALUE;
+         List<Integer> max = new ArrayList<>();
+         for(int i = 0; i < arr.length; i++){
+             if(arr[i] > firstmax){
+
+                 secondmax = firstmax;
+                 firstmax = arr[i];
+             }else if(arr[i] > secondmax){
+
+                 secondmax = arr[i];
+             }
+
+             max.add(firstmax);
+             max.add(secondmax);
+         }
+
+         return max;
+
+    }
+     // given two integer arrrays find if there are values that add up to a value a = [1, 2, 3], b = [10, 20, 30, 40], and v = 42, the output should be true
+     boolean sumOfTwo(int[] a, int[] b, int v) {
+         Map<Integer,Integer> mymap = new HashMap<>();
+         boolean hasadd = false;
+         for(int i = 0; i < a.length; i++){
+
+             mymap.put(v-a[i],a[i]);
+         }
+
+
+         for(int j = 0; j < b.length; j++){
+
+             if(mymap.containsKey(b[j])){
+
+                 hasadd = true;
+                 break;
+             }
+
+         }
+
+         return hasadd;
+     }
+
+    // 3 consecutive vowels return "bad" 5 consecutive consonant return "bad"
+    public static String classifyStrings(String s) {
+        int countV = 0;
+        int countC = 0;
+        String ans = "good";
+        for(int i = 0; i < s.length(); i++){
+
+            if(s.charAt(i) == 'a' ||s.charAt(i) == 'e'||s.charAt(i) == 'i'||s.charAt(i) == 'o'
+                    ||s.charAt(i) == 'u'){
+                if(countV == 3){
+
+                    ans = "bad";
+                }
+
+                countV++;
+            }
+            else if(countV < 3 && s.charAt(i) == '?') {
+                    ans = "mixed";
+
+
+            }
+            else{
+                countV = 0;
+                countC++;
+                if(countC == 5){
+                    ans = "bad";
+                }
+                if(countC < 5 && s.contains("?")){
+
+                    ans = "mixed";
+                }
+            }
+
+
+
+        }
+        return ans;
+    }
+
+
+    // given a sorted array interleave such that a[i]>a[i+1]<a[i+2]
+    // {1,2,3,4,5,6} to {2,1,4,3,6,5}
+    public static int [] interleavearray(int [] arr){
+
+         for(int i = 0; i < arr.length-1; i++){
+             if(i % 2 == 0 || i == 0) {
+                 int temp = arr[i];
+                 arr[i] = arr[i + 1];
+                 arr[i + 1] = temp;
+             }
+
+         }
+
+
+         return arr;
+    }
+
+    // Complete the rotLeft function below.1,2,3,4,5  becomes 5,1,2,3,4
+   public static int[] rotLeft(int[] a, int d) {
+
+       int temp=0, j;
+       for(int i=0;i<d;i++){
+           temp = a[0];
+           for(j=0;j<a.length-1;j++) {
+               a[j] = a[j + 1];
+           }
+           a[j]=temp;
+       }
+       return a;
+    }
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+        String prefix = strs[0];
+        for (int i = 1; i < strs.length; i++)
+            while (strs[i].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty()) return "";
+            }
+        return prefix;
+    }
+
+
+
+
+
+    // rotate array {1,2,3,4} once to left {2,3,4,1}
+    public static int [] rotatearr(int [] arr){
+
+      for(int i = 0; i < 1; i++){
+          for(int j = 0; j < arr.length-1; j++){
+
+              int temp = arr[j+1];
+              arr[j+1] = arr[j];
+              arr[j] = temp;
+
+          }
+
+      }
+
+      return arr;
+    }
+
+   public static int [] removearraydups(int [] arr){
+
+      boolean[] dups = new boolean[arr.length];
+      int nextelem = 1;
+      int counter = 0;
+        for(int i = 0; i < arr.length-1; i++){
+           if(arr[i] == arr[nextelem]){
+               dups[i] = true;
+                counter++;
+
+           }
+
+              nextelem++;
+         }
+         int [] newarr = new int[arr.length-counter];
+        int newcount = 0;
+         for(int i = 0; i < arr.length; i++){
+               if(!dups[i]){
+                   newarr[newcount] = arr[i];
+                   newcount++;
+               }
+
+         }
+          return newarr;
+   }
+    // given a string of characters, find numebr of times we can delet AAABBCCC  should become ABC no duplicate concurrent letters
+    public static int alternateCharacters(String s){
+
+        StringBuilder sb = new StringBuilder();
+        int counter = 0;
+        for(int i = 0; i < s.length()-1; i++){
+            if(s.charAt(i) != s.charAt(i+1)){
+                sb.append(s.charAt(i));
+
+            }
+
+        }
+        sb.append(s.charAt(s.length()-1));
+        int delete = s.length() - sb.length();
+        return delete;
+
+    }
+    public static void main(String[] args) {
+     String[] a = {"flower","flow","flight"};
+    int [] s = {1,2,2,3,4};
+     int []mymap = null ;
         System.out.println(mymap);
+
     }
 
 }
