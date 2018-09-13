@@ -1,8 +1,10 @@
 package com.rob.devoloperops.binarysearch;
 
+import com.sun.tools.javac.util.ArrayUtils;
 import jersey.repackaged.com.google.common.collect.Sets;
 
 import java.util.*;
+
 
 
 public class Binarysearch {
@@ -3345,10 +3347,33 @@ public static boolean stringhasdigitsb(String s){
         return delete;
 
     }
+    // given an array {1,1,1,2,2,2,3,4,5,5,5,} rmove the duplicates in place and return new length
+    public static int []removeduplicatesusingarraylist(int [] arr){
+        List<Integer> list = new ArrayList<>();
+        for(int i : arr){
+            list.add(i);
+        }
+
+        for(int j = 0; j < list.size()-1; j++){
+
+            if(list.get(j) == list.get(j+1)){
+
+                list.remove(j);
+            }
+        }
+        int [] newarr = new int[list.size()];
+        int k = 0;
+        for(int j : list){
+
+            newarr[k++] = j;
+        }
+
+        return newarr;
+    }
     public static void main(String[] args) {
      String[] a = {"flower","flow","flight"};
-    int [] s = {1,2,2,3,4};
-     int []mymap = null ;
+    int [] s = {1,2,2,3,4,4,4,4,5,5,5,6,7};
+     int []mymap = removeduplicatesusingarraylist(s);
         System.out.println(mymap);
 
     }
